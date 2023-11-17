@@ -3,12 +3,6 @@ import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
 import { DataSource } from "typeorm";
 
-// Import Internals
-import {
-    User,
-    Session
-} from "../entities/index";
-
 export async function dbConnection(server: FastifyInstance) {
     const dataSource = new DataSource({
         type: "postgres",
@@ -23,8 +17,9 @@ export async function dbConnection(server: FastifyInstance) {
             rejectUnauthorized: process.env.DB_SSL_CERT ? true : false,
             ca: process.env.DB_SSL_CERT
         },
-        entities: [User, Session]
+        entities: [__dirname + './../entities/**/*.entity.{js,ts}']
     });
+
 
     await dataSource.initialize();
 

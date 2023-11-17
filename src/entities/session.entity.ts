@@ -1,10 +1,11 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { User } from "./user.entity";
 
-export class Session extends BaseEntity {
+@Entity()
+export class Session {
     @PrimaryGeneratedColumn()
     id: string;
 
@@ -18,6 +19,6 @@ export class Session extends BaseEntity {
     @OneToOne(() => User, (table) => table.session, { nullable: true })
     @JoinColumn({ name: "user_id" })
     user: User;
-    @Column("number", { nullable: false })
+    @Column("int", { nullable: false })
     userId: number;
 }

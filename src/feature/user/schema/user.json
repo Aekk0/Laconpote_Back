@@ -1,0 +1,43 @@
+{
+    "$id": "user",
+    "title": "user",
+    "description": "A JSON Schema describing a User",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "nullable": false
+      },
+      "email": {
+        "type": "string",
+        "nullable": false
+      },
+      "password": {
+        "type": "string",
+        "nullable": false
+      },
+      "firstName": {
+        "type": "string",
+        "nullable": false
+      },
+      "lastName": {
+        "type": "string",
+        "nullable": false
+      },
+      "role": {
+        "type": "string",
+        "pattern": "(^Admin$)|(^User$)",
+        "nullable": false
+      },
+      "createdAt": {
+        "type": "string",
+        "nullable": false
+      },
+      "emailVerified": {
+        "type": "string",
+        "nullable": true
+      }
+    },
+    "additionalProperties": false
+  }
+  

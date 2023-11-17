@@ -1,0 +1,121 @@
+{
+    "post": {
+      "summary": "Create user",
+      "description": "Create a user",
+      "tags": [
+        "user"
+      ],
+      "body": {
+        "type": "object",
+        "properties": {
+            "email": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string"
+            },
+            "firstName": {
+                "type": "string"
+            },
+            "lastName": {
+                "type": "string"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "response": {
+        "201": {
+          "$ref": "user"
+        }
+      }
+    },
+    "patch": {
+      "summary": "Patch user",
+      "description": "Patch a user",
+      "tags": [
+        "user"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [ "id" ]
+      },
+      "body": {
+        "$ref": "JSONPatch"
+      }
+    },
+    "findAll": {
+      "summary": "Get all user",
+      "description": "Get all user for this schema",
+      "tags": [
+        "user"
+      ],
+      "response": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "user"
+          }
+        }
+      }
+    },
+    "findById": {
+      "summary": "Get a user by his id",
+      "description": "Get user by his id",
+      "tags": [
+        "user"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "200": {
+          "$ref": "user"
+        }
+      }
+    },
+    "delete": {
+      "summary": "Delete a user by his id",
+      "description": "Delete user by his id",
+      "tags": [
+        "user"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "204": {
+          "type": "null"
+        }
+      }
+    }
+  }
+  

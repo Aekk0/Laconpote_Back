@@ -1,12 +1,13 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 // Import Internals
 import { role } from "./enum/role.enum";
 import { Session } from "./session.entity";
 
 @Unique("UQ_user_email", ["email"])
-export class User extends BaseEntity {
+@Entity()
+export class User {
     @PrimaryGeneratedColumn()
     id: string;
 
