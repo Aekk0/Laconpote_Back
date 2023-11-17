@@ -9,12 +9,14 @@ import autoLoad from "@fastify/autoload";
 import { healthPlugin } from "./plugin/health.plugin";
 import { swaggerPlugin } from "./plugin/swagger.plugin";
 import { DBConnectionPlugin } from "./plugin/db.plugin";
+import { defaultPlugin } from "plugin/default.plugin";
 
 export function buildServer(): FastifyInstance {
   const app = fastify({
     logger: true
   });
 
+  app.register(defaultPlugin);
   app.register(healthPlugin);
   app.register(swaggerPlugin);
   app.register(DBConnectionPlugin);

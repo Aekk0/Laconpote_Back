@@ -14,7 +14,7 @@ export async function swaggerFn(server: FastifyInstance) {
                 description: "Laconpote Swagger API Documentation",
                 version: "0.1.0"
             },
-            host: "localhost",
+            host: "localhost:3001",
             consumes: ["application/json"],
             produces: ["application/json"],
             tags: [
