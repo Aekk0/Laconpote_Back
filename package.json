@@ -1,0 +1,26 @@
+{
+  "name": "laconpote",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "start": "node -r dotenv/config dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nicolas hallaert <nicolas.hallaert.pro@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/autoload": "^5.8.0",
+    "@fastify/cookie": "^9.2.0",
+    "@fastify/swagger": "^7.6.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "fastify-plugin": "^4.5.1",
+    "pg": "^8.11.3",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.1",
+    "typescript": "^5.2.2"
+  }
+}
