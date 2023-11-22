@@ -52,3 +52,53 @@ export async function update(req: PatchRequest): Promise<Entities.User> {
 
     return updatedUser;
 }
+
+export async function findAll(req: FastifyRequest): Promise<Entities.User[]> {
+    const manager = req.server.dataSource.manager;
+
+    const findUsers = await manager.find(Entities.User);
+
+    return findUsers;
+}
+
+export type FindOneRequest = FastifyRequest<{
+    Params: {
+      id: string;
+    };
+}>;
+
+export async function findOneUser(req: FindOneRequest, reply: FastifyReply): Promise<Entities.User> {
+    const manager = req.server.dataSource.manager;
+
+    const findUser = await manager.findOne(Entities.User, {
+        where: {
+            id: req.params.id
+        }
+    });
+
+    if (findUser === null) {
+        return reply.status(404).send({ message: "User Does Not Exist" });
+    }
+
+    return findUser;
+}
+
+export type DeleteUserRequest = FastifyRequest<{
+    Params: {
+      id: string;
+    };
+}>;
+
+export async function deleteUser(req: DeleteUserRequest, reply: FastifyReply) {
+    const manager = req.server.dataSource.manager;
+    
+    const deleteResult = await manager.delete(Entities.User,{
+            id: req.params.id
+    });
+
+    if (deleteResult.affected === 0) {
+        return reply.status(404).send({ message: "User Does Not Exist" });
+    }
+
+    return deleteResult;
+}
