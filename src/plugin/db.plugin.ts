@@ -13,10 +13,10 @@ export async function dbConnection(server: FastifyInstance) {
         database: process.env.DB_NAME ?? "laconpote",
         synchronize: true,
         logging: true,
-        ssl: {
-            rejectUnauthorized: process.env.DB_SSL_CERT ? true : false,
-            ca: process.env.DB_SSL_CERT
-        },
+        // ssl: {
+        //     rejectUnauthorized: process.env.DB_SSL_CERT ? true : false,
+        //     ca: process.env.DB_SSL_CERT
+        // },
         entities: [__dirname + './../entities/**/*.entity.{js,ts}']
     });
 
