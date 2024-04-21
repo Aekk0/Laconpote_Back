@@ -10,15 +10,20 @@ import { authenticationPlugin } from "../../plugin/auth.plugin";
 export default async function api(server: FastifyInstance): Promise<void> {
     server.addSchema(userSchema);
 
-    // server.register(authenticationPlugin);
+    server.post("/", {
+        schema: routeSchema.post
+    }, create);
+
+    server.register(guard);
+}
+
+async function guard(server: FastifyInstance): Promise<void> {
+    server.register(authenticationPlugin);
 
     server.patch("/:id", {
         schema: routeSchema.patch,
     }, update);
 
-    server.post("/", {
-        schema: routeSchema.post
-    }, create);
 
     server.get("/:id", {
         schema: routeSchema.findById
