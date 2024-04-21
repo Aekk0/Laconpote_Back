@@ -44,7 +44,7 @@ export function applyJsonPatch(document: any, patch: jsonpatch.Operation[], opti
   });
 
   if (forbiddenOperations.length > 0) {
-    throw this.myUnisoftErrors.invalidPatchApply(`Operation(s) on forbidden path(s): ${JSON.stringify(forbiddenOperations)}`);
+    throw new Error(`Operation(s) on forbidden path(s): ${JSON.stringify(forbiddenOperations)}`);
   }
 
   const patchedObject = jsonpatch.applyPatch(document, filterPatch).newDocument;
@@ -52,7 +52,7 @@ export function applyJsonPatch(document: any, patch: jsonpatch.Operation[], opti
   if (options.schema) {
     const isValid = ajv.validate(options.schema, patchedObject);
     if (!isValid) {
-      throw this.myUnisoftErrors.invalidPatchApply(`Patched document validation error(s): ${JSON.stringify(ajv.errors)}`);
+      throw new Error(`Patched document validation error(s): ${JSON.stringify(ajv.errors)}`);
     }
   }
 

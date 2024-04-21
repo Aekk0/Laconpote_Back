@@ -1,12 +1,11 @@
 // Import Third-party Dependencies
 import { FastifyInstance } from "fastify";
 
-export default async function api(server: FastifyInstance): Promise<void> {
-    server.post("/", { schema: { tags: ["auth"] } }, async() => {
-        console.log("foo");
+// Import Internal Dependencies
+import { authenticate } from "./auth.controller";
 
-        return;
-    });
+export default async function api(server: FastifyInstance): Promise<void> {
+    server.post("/", { schema: { tags: ["auth"] } }, authenticate);
 }
 
 export const autoPrefix = "/auth";
