@@ -13,10 +13,10 @@ export class Product {
     @Column("varchar")
     name: string;
 
-    @Column("varchar", { nullable: true })
+    @Column("text", { nullable: true })
     description: string;
 
-    @Column("integer")
+    @Column("decimal")
     price: number;
 
     // RELATIONS

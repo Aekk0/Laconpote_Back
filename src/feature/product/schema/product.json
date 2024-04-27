@@ -1,0 +1,26 @@
+{
+  "$id": "product",
+  "title": "product",
+  "description": "A JSON Schema describing a Product",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "name": {
+      "type": "string",
+      "nullable": true
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "price": {
+      "type": "number",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false
+}
+  
