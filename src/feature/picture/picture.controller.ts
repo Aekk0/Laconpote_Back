@@ -59,17 +59,17 @@ export type FindAllByProductRequest = FastifyRequest<{
     };
 }>;
 
-export async function findAllByProduct(req: FindAllByProductRequest): Promise<Entities.Picture[]> {
-    const manager = req.server.dataSource.manager;
+// export async function findAllByProduct(req: FindAllByProductRequest): Promise<Entities.Picture[]> {
+//     const manager = req.server.dataSource.manager;
 
-    const findPictures = await manager.find(Entities.Picture, { 
-        where: {
-            productId: req.params.id
-        }
-    });
+//     const findPictures = await manager.find(Entities.Picture, { 
+//         where: {
+//             product_id: req.params.id
+//         }
+//     });
 
-    return findPictures;
-}
+//     return findPictures;
+// }
 
 export type FindOneRequest = FastifyRequest<{
     Params: {

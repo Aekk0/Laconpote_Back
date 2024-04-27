@@ -20,8 +20,4 @@ export class Picture {
     @ManyToOne(() => Product, (product) => product.pictures)
     @JoinColumn({ name: "product_id"})
     product: Product;
-
-    @Column("varchar")
-    productId: string;
-
 }
