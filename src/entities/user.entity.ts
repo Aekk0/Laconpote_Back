@@ -1,5 +1,5 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 // Import Internals
 import { role } from "./enum/role.enum";
@@ -27,7 +27,7 @@ export class User {
     role: role;
 
     @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
-    createdAt: string;
+    createdAt: Date;
 
     @Column("timestamp", { nullable: true })
     emailVerified: string;

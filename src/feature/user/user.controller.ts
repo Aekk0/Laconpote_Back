@@ -1,3 +1,6 @@
+// Import Node.js
+import crypto from "node:crypto";
+
 // Import Third-party Dependencies
 import { FastifyRequest, FastifyReply } from "fastify";
 
@@ -13,7 +16,10 @@ export type PostRequest = FastifyRequest<{
 export async function create(req: PostRequest, reply: FastifyReply): Promise<Entities.User> {
     const manager = req.server.dataSource.manager;
 
-    const newUser = manager.create(Entities.User, req.body);
+    const hex = crypto.createHash("sha256").update(req.body.password.trim().replace(/\\/g, "\\\\")).digest("hex");
+    const hashedPassword = Buffer.from(hex).toString("base64");
+
+    const newUser = manager.create(Entities.User, { ...req.body, password: hashedPassword });
     const { id } = await manager.save(Entities.User, newUser);
 
     const savedUser = await manager.findOneBy(Entities.User, { id });
@@ -50,7 +56,9 @@ export async function update(req: PatchRequest): Promise<Entities.User> {
     const newUser = manager.create(Entities.User, patchedUser);
     const updatedUser = await manager.save(Entities.User, newUser);
 
-    return updatedUser;
+    const { id, password, ...user } = updatedUser;
+
+    return user;
 }
 
 export async function findAll(req: FastifyRequest): Promise<Entities.User[]> {

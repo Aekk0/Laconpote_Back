@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
       "id": {
-        "type": "string",
+        "type": "number",
         "nullable": false
       },
       "email": {
@@ -26,11 +26,11 @@
       },
       "role": {
         "type": "string",
-        "pattern": "(^Admin$)|(^User$)",
+        "pattern": "(^admin$)|(^user$)",
         "nullable": false
       },
       "createdAt": {
-        "type": "string",
+        "type": "object",
         "nullable": false
       },
       "emailVerified": {
