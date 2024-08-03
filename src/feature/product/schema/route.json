@@ -106,7 +106,7 @@
       },
       "response": {
         "200": {
-          "$ref": "product"
+          "$ref": "product-with-picture"
         }
       }
     },
