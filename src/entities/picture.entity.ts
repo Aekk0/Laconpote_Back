@@ -1,10 +1,9 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { Product } from "./product.entity";
 
-// @Unique("UQ_user_email", ["email"])
 @Entity()
 export class Picture {
     @PrimaryGeneratedColumn()
@@ -17,7 +16,7 @@ export class Picture {
     description: string;
 
     // RELATIONS
-    @ManyToOne(() => Product, (product) => product.pictures)
+    @ManyToOne(() => Product, (product) => product.pictures, { onDelete: "CASCADE" })
     @JoinColumn({ name: "product_id"})
     product: Product;
 }

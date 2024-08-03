@@ -1,10 +1,9 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { Picture } from "./picture.entity";
 
-// @Unique("UQ_user_email", ["email"])
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
