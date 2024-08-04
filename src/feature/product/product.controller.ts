@@ -61,8 +61,8 @@ export async function update(req: PatchRequest): Promise<Entities.Product> {
         schema: productSchema
     };
 
-    const patchedProduct = req.server.applyJsonPatch(foundProduct, req.body, patchOptions);
-
+    const patchedProduct = req.server.applyJsonPatch({ ...foundProduct, price: Number(foundProduct.price) }, req.body, patchOptions);
+    
     const newProduct = manager.create(Entities.Product, patchedProduct);
     const updatedProduct = await manager.save(Entities.Picture, newProduct);
 
