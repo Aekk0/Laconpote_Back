@@ -2,32 +2,24 @@
 import { FastifyInstance } from "fastify";
 
 // Import Internals
-import { update, create, findOnePicture, deletePicture } from "./picture.controller";
+import { update, deleteOne, deleteMany } from "./picture.controller";
 import pictureSchema from "./schema/picture.json";
+import routeSchema from "./schema/route.json";
 
 export default async function api(server: FastifyInstance): Promise<void> {
-    
     server.addSchema(pictureSchema);
 
     server.patch("/:id", {
-        // schema: routeSchema.patch,
+        schema: routeSchema.patch
     }, update);
 
-    server.post("/", {
-        // schema: routeSchema.post
-    }, create);
-
-    server.get("/:id", {
-        // schema: routeSchema.findById
-    }, findOnePicture);
-
-    // server.get("/", {
-    //     // schema: routeSchema.findAll
-    // }, findAllByProduct);
-
     server.delete("/:id", {
-        // schema: routeSchema.delete
-    }, deletePicture);
+        schema: routeSchema.deleteOne
+    }, deleteOne);
+
+    server.delete("/", {
+        schema: routeSchema.deleteMany
+    }, deleteMany)
 }
 
 export const autoPrefix = "/picture";

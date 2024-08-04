@@ -1,0 +1,73 @@
+{
+    "patch": {
+      "summary": "Patch picture",
+      "description": "Patch a picture",
+      "tags": [
+        "picture"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [ "id" ]
+      },
+      "body": {
+        "$ref": "JSONPatch"
+      }
+    },
+    "deleteOne": {
+      "summary": "Delete a picture by his id",
+      "description": "Delete picture by his id",
+      "tags": [
+        "picture"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "204": {
+          "type": "null"
+        }
+      }
+    },
+    "deleteMany": {
+      "summary": "Delete many pictures by their ids",
+      "description": "Delete many pictures by their ids",
+      "tags": [
+        "picture"
+      ],
+      "body": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "204": {
+          "type": "null"
+        }
+      }
+    }
+  }
+  
