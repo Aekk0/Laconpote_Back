@@ -1,0 +1,22 @@
+{
+    "$id": "picture",
+    "title": "picture",
+    "description": "A JSON Schema describing a Picture",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "nullable": false
+      },
+      "base64": {
+        "type": "string",
+        "nullable": false
+      },
+      "description": {
+        "type": "string",
+        "nullable": true
+      }
+    },
+    "additionalProperties": false
+  }
+  

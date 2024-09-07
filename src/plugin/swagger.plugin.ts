@@ -19,7 +19,8 @@ export async function swaggerFn(server: FastifyInstance) {
             produces: ["application/json"],
             tags: [
                 { name: "user", description: "Endpoints to manager Users" },
-                { name: "auth", description: "Endpoints to handle Auth" }
+                { name: "auth", description: "Endpoints to handle Auth" },
+                { name: "picture", description: "Endpoints to manager Pictures"}
             ]
         },
         uiConfig: {

@@ -1,0 +1,138 @@
+{
+    "post": {
+      "summary": "Create product",
+      "description": "Create a product",
+      "tags": [
+        "product"
+      ],
+      "body": {
+        "type": "object",
+        "properties": {
+            "description": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string",
+                "maxLength": 125
+            },
+            "price": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d{1,2})?$"
+            },
+            "pictures": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "base64": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "base64",
+                  "description"
+                ]
+              }
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "price"
+        ]
+      },
+      "response": {
+        "201": {
+          "$ref": "product"
+        }
+      }
+    },
+    "patch": {
+      "summary": "Patch product",
+      "description": "Patch a product",
+      "tags": [
+        "product"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [ "id" ]
+      },
+      "body": {
+        "$ref": "JSONPatch"
+      }
+    },
+    "findAll": {
+      "summary": "Get all product",
+      "description": "Get all product for this schema",
+      "tags": [
+        "product"
+      ],
+      "response": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "product"
+          }
+        }
+      }
+    },
+    "findById": {
+      "summary": "Get a product by his id",
+      "description": "Get product by his id",
+      "tags": [
+        "product"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "200": {
+          "$ref": "product-with-picture"
+        }
+      }
+    },
+    "delete": {
+      "summary": "Delete a product by his id",
+      "description": "Delete product by his id",
+      "tags": [
+        "product"
+      ],
+      "params": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "response": {
+        "204": {
+          "type": "null"
+        }
+      }
+    }
+  }
+  

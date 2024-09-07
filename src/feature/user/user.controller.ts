@@ -10,7 +10,7 @@ import userSchema from "./schema/user.json";
 import { PatchOptions } from "../../plugin/default.plugin";
 
 export type PostRequest = FastifyRequest<{
-    Body: Partial<Entities.User>
+    Body: Partial<Entities.User>;
 }>;
   
 export async function create(req: PostRequest, reply: FastifyReply): Promise<Entities.User> {
