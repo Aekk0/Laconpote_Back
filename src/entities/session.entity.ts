@@ -1,5 +1,5 @@
 // Import Third-party Dependencies
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { User } from "./user.entity";
