@@ -6,6 +6,7 @@ import { update, create, findOneUser, findAll, deleteUser } from "./user.control
 import userSchema from "./schema/user.json";
 import routeSchema from "./schema/route.json";
 import { authenticationPlugin } from "../../plugin/auth.plugin";
+import { isAdminPlugin } from "../../plugin/isAdmin.plugin";
 
 export default async function api(server: FastifyInstance): Promise<void> {
     server.addSchema(userSchema);
@@ -29,13 +30,15 @@ async function guard(server: FastifyInstance): Promise<void> {
         schema: routeSchema.findById
     }, findOneUser);
 
-    server.get("/", {
-        schema: routeSchema.findAll
-    }, findAll);
-
     server.delete("/:id", {
         schema: routeSchema.delete
     }, deleteUser);
+
+    server.register(isAdminPlugin);
+
+    server.get("/", {
+        schema: routeSchema.findAll
+    }, findAll);
 }
 
 export const autoPrefix = "/user";

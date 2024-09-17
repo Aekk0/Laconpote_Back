@@ -2,7 +2,6 @@
 import { FastifyInstance, FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
 import fp from "fastify-plugin";
 import { createVerifier, VerifierSync } from "fast-jwt";
-import ms from "ms";
 
 // Import Internal dependencies
 import headerSchema from "../schema/auth-header.schema.json";
@@ -30,7 +29,7 @@ function getToken(this: FastifyRequest): string {
     return getAuthorizationToken(this.headers.authorization);
 }
 
-async function checkAuthentication(request: FastifyRequest, reply: FastifyReply) {
+async function checkAuthentication(request: FastifyRequest) {
     const token = request.getToken();
 
     const tokenInfo: Token & Record<string, any> = await verifyToken(token);
