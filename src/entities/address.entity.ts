@@ -10,7 +10,7 @@ export class Address {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column("number")
+    @Column("integer")
     number: number;
 
     @Column("varchar")
