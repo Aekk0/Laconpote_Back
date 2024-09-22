@@ -7,7 +7,7 @@ import { User } from "./user.entity";
 @Entity()
 export class Session {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column("boolean", { default: false })
     refresh: boolean;
@@ -19,6 +19,6 @@ export class Session {
     @OneToOne(() => User, (table) => table.session, { nullable: true })
     @JoinColumn({ name: "user_id" })
     user: User;
-    @Column("int", { nullable: false })
+    @Column("integer", { nullable: false })
     userId: number;
 }

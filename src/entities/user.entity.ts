@@ -11,7 +11,7 @@ import { Address } from "./address.entity";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column("varchar")
     email: string;

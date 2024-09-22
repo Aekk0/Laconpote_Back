@@ -8,7 +8,7 @@ import { Order } from "./order.entity";
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column("varchar")
     name: string;

@@ -25,7 +25,7 @@ export class Order {
     @ManyToOne(() => User, (table) => table.orders, { onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: "user_id" })
     user: User;
-    @Column("int", { nullable: false })
+    @Column("integer", { nullable: false })
     userId: number;
 
     @ManyToMany(() => Product, (table) => table.orders, { nullable: false })
