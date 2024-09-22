@@ -51,7 +51,7 @@ export async function update(req: PatchRequest): Promise<Entities.Product> {
 
     const foundProduct = await manager.findOne(Entities.Product, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         }
     });
 
@@ -92,7 +92,7 @@ export async function findOneProduct(req: FindOneRequest, reply: FastifyReply): 
 
     const findProduct = await manager.findOne(Entities.Product, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         },
         relations: {
             pictures: true

@@ -41,7 +41,7 @@ export async function update(req: PatchRequest): Promise<Entities.User> {
 
     const foundUser = await manager.findOne(Entities.User, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         }
     });
 
@@ -80,7 +80,7 @@ export async function findOneUser(req: FindOneRequest, reply: FastifyReply): Pro
 
     const findUser = await manager.findOne(Entities.User, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         }
     });
 
