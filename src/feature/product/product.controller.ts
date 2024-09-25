@@ -115,8 +115,8 @@ export type DeleteProductRequest = FastifyRequest<{
 export async function deleteProduct(req: DeleteProductRequest, reply: FastifyReply) {
     const manager = req.server.dataSource.manager;
     
-    const deleteResult = await manager.delete(Entities.Product,{
-            id: req.params.id
+    const deleteResult = await manager.delete(Entities.Product, {
+        id: req.params.id
     });
 
     if (deleteResult.affected === 0) {

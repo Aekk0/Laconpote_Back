@@ -16,9 +16,6 @@ export class Address {
     @Column("varchar")
     street: string;
 
-    @Column("varchar", { nullable: true })
-    complement?: string;
-
     @Column("varchar")
     city: string;
 
@@ -28,12 +25,15 @@ export class Address {
     @Column("varchar")
     phone: string;
 
+    @Column("varchar", { nullable: true })
+    complement?: string;
+
     // FK
     @ManyToOne(() => User, (table) => table.addresses, { onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: "user_id" })
     user: User;
     @Column("integer", { nullable: false })
-    userId: number;
+    user_id: number;
 
     @OneToMany(() => Order, (table) => table.address, { nullable: true })
     orders: Order[];

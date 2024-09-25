@@ -1,43 +1,38 @@
 {
-    "$id": "user",
-    "title": "user",
-    "description": "A JSON Schema describing a User",
+    "$id": "address",
+    "title": "address",
+    "description": "A JSON Schema describing an Address",
     "type": "object",
     "properties": {
       "id": {
         "type": "number",
         "nullable": false
       },
-      "email": {
+      "number": {
+        "type": "number",
+        "nullable": false
+      },
+      "street": {
         "type": "string",
         "nullable": false
       },
-      "password": {
+      "city": {
+        "type": "number",
+        "nullable": false
+      },
+      "ZIPCode": {
         "type": "string",
         "nullable": false
       },
-      "firstName": {
+      "phone": {
         "type": "string",
         "nullable": false
       },
-      "lastName": {
-        "type": "string",
-        "nullable": false
-      },
-      "role": {
-        "type": "string",
-        "pattern": "(^admin$)|(^user$)",
-        "nullable": false
-      },
-      "createdAt": {
-        "type": "object",
-        "nullable": false
-      },
-      "emailVerified": {
+      "complement": {
         "type": "string",
         "nullable": true
       }
     },
-    "additionalProperties": true
+    "additionalProperties": false
   }
-  
+    

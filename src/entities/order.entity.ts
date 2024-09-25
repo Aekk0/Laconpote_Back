@@ -26,12 +26,15 @@ export class Order {
     @JoinColumn({ name: "user_id" })
     user: User;
     @Column("integer", { nullable: false })
-    userId: number;
+    user_id: number;
 
     @ManyToMany(() => Product, (table) => table.orders, { nullable: false })
     @JoinTable()
     products: Product[];
 
     @ManyToOne(() => Address, (table) => table.orders, { nullable: false })
+    @JoinColumn({ name: "address_id" })
     address: Address;
+    @Column("integer", { nullable: false })
+    address_id: number;
 }

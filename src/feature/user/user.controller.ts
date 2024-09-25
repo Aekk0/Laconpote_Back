@@ -24,6 +24,8 @@ export async function create(req: PostRequest, reply: FastifyReply): Promise<Ent
 
     const savedUser = await manager.findOneBy(Entities.User, { id });
 
+    delete savedUser.password;
+
     reply.statusCode = 201;
 
     return savedUser;
@@ -64,9 +66,18 @@ export async function update(req: PatchRequest): Promise<Entities.User> {
 export async function findAll(req: FastifyRequest): Promise<Entities.User[]> {
     const manager = req.server.dataSource.manager;
 
-    const findUsers = await manager.find(Entities.User);
+    const findUsers = await manager.find(Entities.User, {
+        relations: {
+            addresses: true,
+            orders: true
+        }
+    });
 
-    return findUsers;
+    return findUsers.map((user) => {
+        delete user.password;
+
+        return user;
+    });
 }
 
 export type FindOneRequest = FastifyRequest<{
@@ -81,12 +92,17 @@ export async function findOneUser(req: FindOneRequest, reply: FastifyReply): Pro
     const findUser = await manager.findOne(Entities.User, {
         where: {
             id: Number(req.params.id)
+        },
+        relations: {
+            addresses: true
         }
     });
 
     if (findUser === null) {
         return reply.status(404).send({ message: "User Does Not Exist" });
     }
+
+    delete findUser.password;
 
     return findUser;
 }
@@ -101,7 +117,7 @@ export async function deleteUser(req: DeleteUserRequest, reply: FastifyReply) {
     const manager = req.server.dataSource.manager;
     
     const deleteResult = await manager.delete(Entities.User,{
-            id: req.params.id
+        id: req.params.id
     });
 
     if (deleteResult.affected === 0) {

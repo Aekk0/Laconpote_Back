@@ -1,5 +1,5 @@
 // Import Third-party Dependencies
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 // Import Internals
 import { update, create, findOneUser, findAll, deleteUser } from "./user.controller";
@@ -37,6 +37,7 @@ async function guard(server: FastifyInstance): Promise<void> {
 }
 
 async function adminGuard(server: FastifyInstance): Promise<void> {
+    server.register(authenticationPlugin);
     server.register(isAdminPlugin);
 
     server.get("/", {
