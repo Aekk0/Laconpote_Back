@@ -10,7 +10,6 @@ import { healthPlugin } from "./plugin/health.plugin";
 import { swaggerPlugin } from "./plugin/swagger.plugin";
 import { DBConnectionPlugin } from "./plugin/db.plugin";
 import { defaultPlugin } from "./plugin/default.plugin";
-import { stripeConnection } from "./plugin/stripe.plugin";
 
 export function buildServer(): FastifyInstance {
   const app = fastify({
@@ -21,7 +20,6 @@ export function buildServer(): FastifyInstance {
   app.register(healthPlugin);
   app.register(swaggerPlugin);
   app.register(DBConnectionPlugin);
-  app.register(stripeConnection);
 
   app.register(autoLoad, {
     dir: join(__dirname, "./feature"),
