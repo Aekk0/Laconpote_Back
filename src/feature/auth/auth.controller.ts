@@ -45,7 +45,7 @@ export async function authenticate(req: FastifyRequest<AuthenticateRoute>, reply
     }
 
     const bearerTokenPayload: Token = {
-        id: foundUser.id,
+        id: foundUser.id.toString(),
         role: foundUser.role
     };
 

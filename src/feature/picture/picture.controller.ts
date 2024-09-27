@@ -18,7 +18,7 @@ export async function update(req: PatchRequest): Promise<Entities.Picture> {
 
     const foundPicture = await manager.findOne(Entities.Picture, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         }
     });
 
@@ -46,7 +46,7 @@ export async function deleteOne(req: DeleteOneRequest, reply: FastifyReply) {
     const manager = req.server.dataSource.manager;
     
     const deleteResult = await manager.delete(Entities.Picture,{
-            id: req.params.id
+            id: Number(req.params.id)
     });
 
     if (deleteResult.affected === 0) {

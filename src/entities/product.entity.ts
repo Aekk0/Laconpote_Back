@@ -1,13 +1,14 @@
 // Import Third-party Dependencies
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { Picture } from "./picture.entity";
+import { Order } from "./order.entity";
 
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column("varchar")
     name: string;
@@ -19,6 +20,9 @@ export class Product {
     price: number;
 
     // RELATIONS
-    @OneToMany (() => Picture, (picture) => picture.product, { nullable: true })
+    @OneToMany(() => Picture, (picture) => picture.product, { nullable: true })
     pictures: Picture[];
+
+    @ManyToMany(() => Order, (order) => order.products, { nullable: true })
+    orders: Order[];
 }

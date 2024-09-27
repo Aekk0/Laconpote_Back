@@ -1,0 +1,27 @@
+{
+    "$id": "order",
+    "title": "order",
+    "description": "A JSON Schema describing a Order",
+    "type": "object",
+    "properties": {
+        "id": {
+        "type": "number",
+        "nullable": false
+        },
+        "price": {
+        "type": "number",
+        "nullable": false
+        },
+        "stage": {
+        "type": "string",
+        "enum": ["awaiting", "refused", "in-progress", "validated"],
+        "nullable": false
+        },
+        "dueDate": {
+        "type": "string",
+        "nullable": true
+        }
+    },
+    "additionalProperties": true
+}
+    
