@@ -51,7 +51,7 @@ export async function update(req: PatchRequest): Promise<Entities.Product> {
 
     const foundProduct = await manager.findOne(Entities.Product, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         }
     });
 
@@ -92,7 +92,7 @@ export async function findOneProduct(req: FindOneRequest, reply: FastifyReply): 
 
     const findProduct = await manager.findOne(Entities.Product, {
         where: {
-            id: req.params.id
+            id: Number(req.params.id)
         },
         relations: {
             pictures: true
@@ -115,8 +115,8 @@ export type DeleteProductRequest = FastifyRequest<{
 export async function deleteProduct(req: DeleteProductRequest, reply: FastifyReply) {
     const manager = req.server.dataSource.manager;
     
-    const deleteResult = await manager.delete(Entities.Product,{
-            id: req.params.id
+    const deleteResult = await manager.delete(Entities.Product, {
+        id: req.params.id
     });
 
     if (deleteResult.affected === 0) {

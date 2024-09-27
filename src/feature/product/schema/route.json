@@ -81,7 +81,7 @@
         "200": {
           "type": "array",
           "items": {
-            "$ref": "product"
+            "$ref": "product-with-picture"
           }
         }
       }

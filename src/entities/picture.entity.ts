@@ -7,7 +7,7 @@ import { Product } from "./product.entity";
 @Entity()
 export class Picture {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column("varchar")
     base64: string;
