@@ -22,7 +22,7 @@ export default async function api(server: FastifyInstance): Promise<void> {
 async function guard(server: FastifyInstance): Promise<void> {
     server.register(authenticationPlugin);
 
-    server.get("/", getUserData);
+    server.get("/data", getUserData);
 
     server.patch("/", updateUserData);
 
