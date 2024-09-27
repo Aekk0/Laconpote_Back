@@ -3,10 +3,11 @@ import { buildServer } from "./app";
 
 const server = buildServer();
 
+console.log(process.env.port, process.env.PORT, process.env.host);
+
 server.listen(
   {
-    port: !Number.isNaN(Number(process.env.port)) && Number(process.env.port) !== 0 ? 
-        Number(process.env.port) : 3001,
+    port: Number(process.env.PORT)!,
     host: process.env.host ?? "localhost"
   },
   function httpListeningCallback(err, addr) {
