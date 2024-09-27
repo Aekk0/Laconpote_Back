@@ -20,8 +20,8 @@ export function buildServer(): FastifyInstance {
   app.register(defaultPlugin);
   app.register(healthPlugin);
   app.register(swaggerPlugin);
-  app.register(DBConnectionPlugin);
-  app.register(stripeConnection);
+  // app.register(DBConnectionPlugin);
+  // app.register(stripeConnection);
 
   app.register(autoLoad, {
     dir: join(__dirname, "./feature"),
