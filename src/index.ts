@@ -2,13 +2,10 @@
 import { buildServer } from "./app";
 
 const server = buildServer();
-
-console.log(process.env.port, process.env.PORT, process.env.host);
-
 server.listen(
   {
-    port: Number(process.env.PORT)!,
-    host: process.env.host ?? "localhost"
+    port: Number(process.env.PORT),
+    host: process.env.HOST ?? "0.0.0.0"
   },
   function httpListeningCallback(err, addr) {
     if (err) {
