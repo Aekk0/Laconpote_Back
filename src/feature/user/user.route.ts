@@ -2,7 +2,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 // Import Internals
-import { update, create, findOneUser, findAll, deleteUser } from "./user.controller";
+import { update, create, findOneUser, findAll, deleteUser, getUserData, updateUserData } from "./user.controller";
 import userSchema from "./schema/user.json";
 import routeSchema from "./schema/route.json";
 import { authenticationPlugin } from "../../plugin/auth.plugin";
@@ -22,10 +22,9 @@ export default async function api(server: FastifyInstance): Promise<void> {
 async function guard(server: FastifyInstance): Promise<void> {
     server.register(authenticationPlugin);
 
-    server.patch("/:id", {
-        schema: routeSchema.patch,
-    }, update);
+    server.get("/", getUserData);
 
+    server.patch("/", updateUserData);
 
     server.get("/:id", {
         schema: routeSchema.findById
@@ -43,6 +42,10 @@ async function adminGuard(server: FastifyInstance): Promise<void> {
     server.get("/", {
         schema: routeSchema.findAll
     }, findAll); 
+
+    server.patch("/:id", {
+        schema: routeSchema.patch,
+    }, update);
 }
 
 export const autoPrefix = "/user";

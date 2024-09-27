@@ -63,6 +63,35 @@ export async function update(req: PatchRequest): Promise<Entities.User> {
     return user;
 }
 
+export type UpdateUserDataRequest = FastifyRequest<{
+    Body: Array<any>;
+}>;
+  
+export async function updateUserData(req: UpdateUserDataRequest): Promise<Entities.User> {
+    const manager = req.server.dataSource.manager;
+
+    const foundUser = await manager.findOne(Entities.User, {
+        where: {
+            id: Number(req.tokenInfo.id)
+        }
+    });
+
+    const patchOptions: PatchOptions = {
+        throwOnForbiddenPath: true,
+        forbiddenPaths: ["/id"],
+        schema: userSchema
+    };
+
+    const patchedUser = req.server.applyJsonPatch(foundUser, req.body, patchOptions);
+
+    const newUser = manager.create(Entities.User, patchedUser);
+    const updatedUser = await manager.save(Entities.User, newUser);
+
+    const { id, password, ...user } = updatedUser;
+
+    return user;
+}
+
 export async function findAll(req: FastifyRequest): Promise<Entities.User[]> {
     const manager = req.server.dataSource.manager;
 
@@ -92,6 +121,27 @@ export async function findOneUser(req: FindOneRequest, reply: FastifyReply): Pro
     const findUser = await manager.findOne(Entities.User, {
         where: {
             id: Number(req.params.id)
+        },
+        relations: {
+            addresses: true
+        }
+    });
+
+    if (findUser === null) {
+        return reply.status(404).send({ message: "User Does Not Exist" });
+    }
+
+    delete findUser.password;
+
+    return findUser;
+}
+
+export async function getUserData(req: FastifyRequest, reply: FastifyReply): Promise<Entities.User> {
+    const manager = req.server.dataSource.manager;
+
+    const findUser = await manager.findOne(Entities.User, {
+        where: {
+            id: Number(req.tokenInfo.id)
         },
         relations: {
             addresses: true
