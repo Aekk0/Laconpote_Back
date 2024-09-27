@@ -73,7 +73,7 @@ export async function defaultFn(server: FastifyInstance) {
 
     server.register(fastifyCors, {
         credentials: true,
-        origin: true
+        origin: "*"
     });
 
     server.addSchema(jsonPatchSchema);
