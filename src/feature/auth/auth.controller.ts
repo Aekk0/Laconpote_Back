@@ -30,6 +30,9 @@ export async function authenticate(req: FastifyRequest<AuthenticateRoute>, reply
     const foundUser = await manager.findOne(Entities.User, {
         where: {
             email
+        },
+        relations: {
+            addresses: true
         }
     });
 
