@@ -5,7 +5,6 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import * as Entities from "../../entities/index";
 import orderSchema from "./schema/order.json";
 import { PatchOptions } from "../../plugin/default.plugin";
-import { In } from "typeorm";
 
 export type PostRequest = FastifyRequest<{
     Body: Partial<Entities.Order>
@@ -17,11 +16,18 @@ export async function create(req: PostRequest, reply: FastifyReply): Promise<Ent
     const { products, ...order } = req.body;
     const userId = req.tokenInfo.id;
 
-    const relatedProducts = await manager.find(Entities.Product, {
-        where: {
-            id: In(products.map((product) => product.id))
+    const allProducts = await manager.find(Entities.Product);
+
+    const relatedProducts = [];
+
+
+    console.log("FOOOO", products, allProducts);
+    for (const product of products) {
+        const rel = allProducts.find((dbproduct) => dbproduct.id === product.id);
+        if (rel && rel !== null) {
+            relatedProducts.push(rel);
         }
-    });
+    }
 
     let price = 0;
 
