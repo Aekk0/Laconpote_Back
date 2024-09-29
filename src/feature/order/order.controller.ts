@@ -65,7 +65,8 @@ export async function findAll(req: FastifyRequest): Promise<Entities.Order[]> {
 
     const orders = await manager.find(Entities.Order, {
         relations: {
-            orderProducts: { product: true }
+            orderProducts: { product: true },
+            address: true
         }
     });
 
