@@ -6,28 +6,50 @@ import * as Entities from "../../entities/index";
 import orderSchema from "./schema/order.json";
 import { PatchOptions } from "../../plugin/default.plugin";
 
-export type PostRequest = FastifyRequest<{
-    Body: Partial<Entities.Order>
+export type OrderRequest = FastifyRequest<{
+    Body: {
+        address_id: number;
+        products: { id: number; quantity: number }[];  // Array of product IDs with quantities
+        price?: number;  // Optional if you want to auto-calculate based on products
+        dueDate?: Date;
+    };
 }>;
 
-export async function create(req: PostRequest, reply: FastifyReply): Promise<Entities.Order> {
+export async function create(req: OrderRequest, reply: FastifyReply): Promise<Entities.Order> {
     const manager = req.server.dataSource.manager;
 
-    const { products, ...order } = req.body;
+    const { address_id, products, dueDate } = req.body;
     const userId = req.tokenInfo.id;
 
-    const allProducts = await manager.find(Entities.Product);
+    const address = await manager.findOne(Entities.Address, { where: { id: address_id } });
 
-    const relatedProducts = allProducts.filter((dbproduct) => 
-        products.some((product) => dbproduct.id === product.id)
-    );
+    const orderProducts = [];
 
-    const newOrder = manager.create(Entities.Order, { 
-        ...order,
-        price: 0,
+    let totalOrderPrice = 0;
+
+    for (const { id, quantity } of products) {
+        const product = await manager.findOne(Entities.Product, { where: { id } });
+        if (!product) continue;
+
+        // Calculate total price if not provided
+        totalOrderPrice += Number(product.price) * quantity;
+
+        const orderProduct = manager.create(Entities.OrderProduct, {
+            product,
+            quantity
+        });
+        await manager.save(Entities.OrderProduct, orderProduct);
+
+        orderProducts.push(orderProduct);
+    }
+
+    const newOrder = manager.create(Entities.Order, {
         user_id: Number(userId),
-        products: relatedProducts
-    } as any);
+        address,
+        orderProducts,  // Attach order products
+        price: totalOrderPrice,  // Use provided price or calculate it
+        dueDate: dueDate || new Date()
+    });
 
     const { id } = await manager.save(Entities.Order, newOrder);
 
@@ -43,7 +65,7 @@ export async function findAll(req: FastifyRequest): Promise<Entities.Order[]> {
 
     const orders = await manager.find(Entities.Order, {
         relations: {
-            products: true
+            orderProducts: { product: true }
         }
     });
 
@@ -60,7 +82,7 @@ export async function findAllByUser(req: FastifyRequest): Promise<Entities.Order
             user_id: Number(userId)
         },
         relations: {
-            products: true
+            orderProducts: { product: true }
         }
     });
 

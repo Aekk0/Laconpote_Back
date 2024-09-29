@@ -4,6 +4,7 @@ import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "t
 // Import Internals
 import { Picture } from "./picture.entity";
 import { Order } from "./order.entity";
+import { OrderProduct } from "./orderProduct.entity";
 
 @Entity()
 export class Product {
@@ -23,6 +24,6 @@ export class Product {
     @OneToMany(() => Picture, (picture) => picture.product, { nullable: true })
     pictures: Picture[];
 
-    @ManyToMany(() => Order, (order) => order.products, { nullable: true })
-    orders: Order[];
+    @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.product)
+    orderProducts: OrderProduct[];
 }
