@@ -18,31 +18,15 @@ export async function create(req: PostRequest, reply: FastifyReply): Promise<Ent
 
     const allProducts = await manager.find(Entities.Product);
 
-    const relatedProducts = [];
-
-
-    console.log("FOOOO", products, allProducts);
-    for (const product of products) {
-        const rel = allProducts.find((dbproduct) => dbproduct.id === product.id);
-        if (rel && rel !== null) {
-            relatedProducts.push(rel);
-        }
-    }
-
-    let price = 0;
-
-    for (const product of products) {
-        if (relatedProducts.map((relatedProduct) => relatedProduct.id).find((relatedProduct) => relatedProduct === product.id)) {
-            price = price + Number(product.price);
-        }
-
-        continue;
-    }
+    const relatedProducts = allProducts.filter((dbproduct) => 
+        products.some((product) => dbproduct.id === product.id)
+    );
 
     const newOrder = manager.create(Entities.Order, { 
         ...order,
-        price,
-        user_id: Number(userId)
+        price: 0,
+        user_id: Number(userId),
+        products: relatedProducts
     } as any);
 
     const { id } = await manager.save(Entities.Order, newOrder);
@@ -57,7 +41,11 @@ export async function create(req: PostRequest, reply: FastifyReply): Promise<Ent
 export async function findAll(req: FastifyRequest): Promise<Entities.Order[]> {
     const manager = req.server.dataSource.manager;
 
-    const orders = await manager.find(Entities.Order);
+    const orders = await manager.find(Entities.Order, {
+        relations: {
+            products: true
+        }
+    });
 
     return orders;
 }
@@ -70,6 +58,9 @@ export async function findAllByUser(req: FastifyRequest): Promise<Entities.Order
     const addresses = await manager.find(Entities.Order, {
         where: {
             user_id: Number(userId)
+        },
+        relations: {
+            products: true
         }
     });
 
@@ -94,8 +85,6 @@ export async function update(req: PatchRequest): Promise<Entities.Order> {
             user_id: Number(userId)
         }
     });
-
-    console.log(req.body);
 
     const patchOptions: PatchOptions = {
         throwOnForbiddenPath: true,

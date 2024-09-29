@@ -9,7 +9,7 @@
         "nullable": false
         },
         "price": {
-        "type": "number",
+        "type": "string",
         "nullable": false
         },
         "stage": {
