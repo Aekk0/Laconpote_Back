@@ -1,11 +1,12 @@
 // Import Third-party Dependencies
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 // Import Internals
 import { User } from "./user.entity";
 import { Address } from "./address.entity";
 import { stage } from "./enum";
 import { OrderProduct } from "./orderProduct.entity";
+import { Provider } from "./provider.entity";
 
 @Entity()
 export class Order {
@@ -36,4 +37,10 @@ export class Order {
     address: Address;
     @Column("integer", { nullable: false })
     address_id: number;
+
+    @ManyToOne(() => Provider, (table) => table.orders, { nullable: false })
+    @JoinColumn({ name: "provider_id" })
+    provider: Provider;
+    @Column("integer", { nullable: false })
+    provider_id: number;
 }

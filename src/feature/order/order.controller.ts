@@ -9,6 +9,7 @@ import { PatchOptions } from "../../plugin/default.plugin";
 export type OrderRequest = FastifyRequest<{
     Body: {
         address_id: number;
+        provider_id: number;
         products: { id: number; quantity: number }[];  // Array of product IDs with quantities
         price?: number;  // Optional if you want to auto-calculate based on products
         dueDate?: Date;
@@ -18,10 +19,11 @@ export type OrderRequest = FastifyRequest<{
 export async function create(req: OrderRequest, reply: FastifyReply): Promise<Entities.Order> {
     const manager = req.server.dataSource.manager;
 
-    const { address_id, products, dueDate } = req.body;
+    const { address_id, provider_id, products, dueDate } = req.body;
     const userId = req.tokenInfo.id;
 
     const address = await manager.findOne(Entities.Address, { where: { id: address_id } });
+    const provider = await manager.findOne(Entities.Provider, { where: { id: provider_id } });
 
     const orderProducts = [];
 
@@ -46,6 +48,7 @@ export async function create(req: OrderRequest, reply: FastifyReply): Promise<En
     const newOrder = manager.create(Entities.Order, {
         user_id: Number(userId),
         address,
+        provider,
         orderProducts,  // Attach order products
         price: totalOrderPrice,  // Use provided price or calculate it
         dueDate: dueDate || new Date()
@@ -66,6 +69,7 @@ export async function findAll(req: FastifyRequest): Promise<Entities.Order[]> {
     const orders = await manager.find(Entities.Order, {
         relations: {
             orderProducts: { product: true },
+            provider: true,
             address: true,
             user: true
         }
@@ -86,6 +90,7 @@ export async function findAllByUser(req: FastifyRequest): Promise<Entities.Order
         relations: {
             orderProducts: { product: true },
             address: true,
+            provider: true,
             user: true
         }
     });

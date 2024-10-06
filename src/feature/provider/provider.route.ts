@@ -6,28 +6,23 @@ import { authenticationPlugin } from "../../plugin/auth.plugin";
 import {
     create,
     deleteById,
-    update,
-    findAllByUser,
     findAll
-} from "./order.controller";
+} from "./provider.controller";
 import { isAdminPlugin } from "../../plugin/isAdmin.plugin";
 
 export default async function api(server: FastifyInstance): Promise<void> {
     server.register(authenticationPlugin);
-
-    server.get("/", findAllByUser);
-
-    server.post("/", create);
-
-    server.delete("/:id", deleteById);
-
+    server.get("/", findAll);
+    
     server.register(guard);
 }
 
 async function guard(server: FastifyInstance): Promise<void> {
     server.register(isAdminPlugin);
-
-    server.get("/all", findAll);
+    
+    server.post("/", create);
+    
+    server.delete("/:id", deleteById);
 }
 
-export const autoPrefix = "/order";
+export const autoPrefix = "/provider";
